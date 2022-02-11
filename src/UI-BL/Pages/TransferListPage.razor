@@ -1,0 +1,89 @@
+﻿@page "/"
+@page "/transfer/list"
+@inherits BlazorComponent
+@inject ITransferHeadService TransferHeadService
+@inject IProductService ProductService
+@inject IWarehouseService WarehouseService
+<PageTitle>TestJob01</PageTitle>
+
+<h1>Список перемещений</h1>
+
+@if (transferHeads == null)
+{
+  <Spinner></Spinner>
+}
+else
+{
+  <p class="esh-link-wrapper">
+    <button class="btn btn-primary" @onclick="@(CreateClick)">
+      Создать новое перемещение
+    </button>
+  </p>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Откуда</th>
+        <th>Куда</th>
+        <th>Дата</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="cursor-pointer">
+      @foreach (var item in transferHeads)
+      {
+        <tr>
+          <td>@item.ShipperName</td>
+          <td>@item.ReceiverName</td>
+          <td>@item.OperationDate</td>
+          <td>
+            <button @onclick="@(() => DeleteClick(item))" @onclick:stopPropagation="true" class="btn btn-danger">
+              Удалить
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <TransferCreateDialog OnSaveClick="ReloadTransferHeads" @ref="CreateDialog"></TransferCreateDialog>
+  <TransferDeleteDialog OnSaveClick="ReloadTransferHeads" @ref="DeleteDialog"></TransferDeleteDialog>
+
+}
+
+@code {
+  private List<TransferHead>? transferHeads;
+  private List<Product>? products;
+  private List<Warehouse>? warehouses;
+
+  private TransferCreateDialog? CreateDialog { get; set; }
+  private TransferDeleteDialog? DeleteDialog { get; set; }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      transferHeads = await TransferHeadService.List();
+      products = await ProductService.List();
+      warehouses = await WarehouseService.List();
+
+      CallRequestRefresh();
+    }
+
+    await base.OnAfterRenderAsync(firstRender);
+  }
+
+  private async Task CreateClick()
+  {
+    //await CreateDialog!.Open();
+  }
+
+  private async Task DeleteClick(TransferHead item)
+  {
+    await DeleteDialog!.Open(item);
+  }
+
+  private async Task ReloadTransferHeads()
+  {
+    transferHeads = await TransferHeadService.List();
+    StateHasChanged();
+  }}
