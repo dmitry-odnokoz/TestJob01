@@ -4,11 +4,11 @@ using System.Text.Json;
 namespace TestJob01.UI_BL.Services;
 public class HttpService {
     private readonly HttpClient _httpClient;
-    private readonly ToastService _toastService;
+    //private readonly ToastService _toastService;
 
-    public HttpService(HttpClient httpClient, ToastService toastService) {
+    public HttpService(HttpClient httpClient/*, ToastService toastService*/) {
         _httpClient = httpClient;
-        _toastService = toastService;
+        //_toastService = toastService;
     }
 
     public async Task<T> HttpGet<T>(string uri)

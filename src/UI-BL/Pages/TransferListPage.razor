@@ -1,7 +1,7 @@
 ﻿@page "/"
 @page "/transfer/list"
 @inherits BlazorComponent
-@inject ITransferHeadService TransferHeadService
+@inject ITransferService TransferHeadService
 @inject IProductService ProductService
 @inject IWarehouseService WarehouseService
 <PageTitle>TestJob01</PageTitle>
@@ -62,7 +62,7 @@ else
   {
     if (firstRender)
     {
-      transferHeads = await TransferHeadService.List();
+      transferHeads = await TransferHeadService.ListHeadsOnly();
       products = await ProductService.List();
       warehouses = await WarehouseService.List();
 
@@ -84,6 +84,6 @@ else
 
   private async Task ReloadTransferHeads()
   {
-    transferHeads = await TransferHeadService.List();
+    transferHeads = await TransferHeadService.ListHeadsOnly();
     StateHasChanged();
   }}

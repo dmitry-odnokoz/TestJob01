@@ -1,0 +1,24 @@
+﻿@inject DialogService DialogService
+
+<div class="row">
+    <div class="col-md-12">
+        <RadzenButton Text="Отменить" Icon="cancel" Click=@OnDialogCancel ButtonStyle="ButtonStyle.Secondary" Style="margin-bottom: 10px;" />
+        <RadzenButton  Text="Сохранить" Icon="save" Click=@OnDialogClose Style="margin-bottom: 10px;" />
+    </div>
+</div>
+
+@code {
+  [Parameter]
+  public List<Product>? Products { get; set; }
+  [Parameter]
+  public List<Warehouse>? Warehouses { get; set; }
+
+  void OnDialogCancel()
+  {
+    DialogService.Close(false);
+  }
+  void OnDialogClose()
+  {
+    DialogService.Close(true);
+  }
+}

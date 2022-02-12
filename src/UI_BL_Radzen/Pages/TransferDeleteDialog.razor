@@ -1,0 +1,34 @@
+﻿@inject DialogService DialogService
+@inject ITransferService TransferHeadService
+
+<div class="row">
+  <dl class="col-md-6 dl-horizontal">
+    <dt>Откуда</dt>
+    <dd>@DeletingItem.ShipperName</dd>
+    <dt>Куда</dt>
+    <dd>@DeletingItem.ReceiverName</dd>
+    <dt>Дата</dt>
+    <dd>@DeletingItem.OperationDate</dd>
+  </dl>
+  </div>
+<div class="row">
+  <div class="col-md-12">
+    <RadzenButton Text="Отменить" Icon="cancel" Click=@OnDialogCancel ButtonStyle="ButtonStyle.Secondary" Style="margin-bottom: 10px;" />
+    <RadzenButton Text="Удалить" Icon="delete" Click=@OnDialogClose Style="margin-bottom: 10px;" />
+  </div>
+</div>
+
+@code {
+  [Parameter]
+  public TransferHead? DeletingItem { get; set; }
+
+  void OnDialogCancel()
+  {
+    DialogService.Close(false);
+  }
+  void OnDialogClose()
+  {
+
+    DialogService.Close(true);
+  }
+}

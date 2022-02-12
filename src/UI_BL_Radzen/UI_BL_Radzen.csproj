@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>TestJob01.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\UI-BL\Configuration\BaseUrlConfiguration.cs" Link="Configuration\BaseUrlConfiguration.cs" />
+    <Compile Include="..\UI-BL\Interfaces\IProductService.cs" Link="Interfaces\IProductService.cs" />
+    <Compile Include="..\UI-BL\Interfaces\IRemainderService.cs" Link="Interfaces\IRemainderService.cs" />
+    <Compile Include="..\UI-BL\Interfaces\ITransferService.cs" Link="Interfaces\ITransferService.cs" />
+    <Compile Include="..\UI-BL\Interfaces\IWarehouseService.cs" Link="Interfaces\IWarehouseService.cs" />
+    <Compile Include="..\UI-BL\Models\CreateTransferRequest.cs" Link="Models\CreateTransferRequest.cs" />
+    <Compile Include="..\UI-BL\Models\CreateTransferResponse.cs" Link="Models\CreateTransferResponse.cs" />
+    <Compile Include="..\UI-BL\Models\DeleteTransferRequest.cs" Link="Models\DeleteTransferRequest.cs" />
+    <Compile Include="..\UI-BL\Models\DeleteTransferResponse.cs" Link="Models\DeleteTransferResponse.cs" />
+    <Compile Include="..\UI-BL\Models\ErrorDetails.cs" Link="Models\ErrorDetails.cs" />
+    <Compile Include="..\UI-BL\Models\ListProductsResponse.cs" Link="Models\ListProductsResponse.cs" />
+    <Compile Include="..\UI-BL\Models\ListTransferHeadsResponse.cs" Link="Models\ListTransferHeadsResponse.cs" />
+    <Compile Include="..\UI-BL\Models\ListWarehousesResponse.cs" Link="Models\ListWarehousesResponse.cs" />
+    <Compile Include="..\UI-BL\Models\Product.cs" Link="Models\Product.cs" />
+    <Compile Include="..\UI-BL\Models\Remainder.cs" Link="Models\Remainder.cs" />
+    <Compile Include="..\UI-BL\Models\RemainderListByWarehouseAndDateRequest.cs" Link="Models\RemainderListByWarehouseAndDateRequest.cs" />
+    <Compile Include="..\UI-BL\Models\RemainderListByWarehouseAndDateResponse.cs" Link="Models\RemainderListByWarehouseAndDateResponse.cs" />
+    <Compile Include="..\UI-BL\Models\RemainderListNonZeroByWarehouseResponse.cs" Link="Models\RemainderListNonZeroByWarehouseResponse.cs" />
+    <Compile Include="..\UI-BL\Models\Transfer.cs" Link="Models\Transfer.cs" />
+    <Compile Include="..\UI-BL\Models\TransferHead.cs" Link="Models\TransferHead.cs" />
+    <Compile Include="..\UI-BL\Models\TransferItem.cs" Link="Models\TransferItem.cs" />
+    <Compile Include="..\UI-BL\Models\Warehouse.cs" Link="Models\Warehouse.cs" />
+    <Compile Include="..\UI-BL\ServicesConfiguration.cs" Link="ServicesConfiguration.cs" />
+    <Compile Include="..\UI-BL\Services\HttpService.cs" Link="Services\HttpService.cs" />
+    <Compile Include="..\UI-BL\Services\ProductService.cs" Link="Services\ProductService.cs" />
+    <Compile Include="..\UI-BL\Services\RemainderService.cs" Link="Services\RemainderService.cs" />
+    <Compile Include="..\UI-BL\Services\TransferService.cs" Link="Services\TransferService.cs" />
+    <Compile Include="..\UI-BL\Services\WarehouseService.cs" Link="Services\WarehouseService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.2" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="6.0.0" />
+    <PackageReference Include="Radzen.Blazor" Version="3.15.2" />
+    <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+</Project>

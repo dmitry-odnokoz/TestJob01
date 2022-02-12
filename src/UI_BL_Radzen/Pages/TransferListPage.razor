@@ -1,0 +1,78 @@
+﻿@page "/"
+@page "/transfer/list"
+@inject DialogService DialogService
+@inject ITransferService TransferService
+@inject IProductService ProductService
+@inject IWarehouseService WarehouseService
+
+<h1>Список перемещений</h1>
+@if (transferHeads == null)
+{
+  <p><em>Загружаемся...</em></p>
+}
+else
+{
+  <RadzenButton Text="Создать новое перемещение" Click=CreateClick
+              ButtonStyle=ButtonStyle.Primary Icon="add" />
+  <RadzenDataGrid Name="TransfersDataGrid" Data=transferHeads TItem=TransferHead>
+    <Columns>
+      <RadzenDataGridColumn TItem=TransferHead Property=ShipperName Title="Откуда" />
+      <RadzenDataGridColumn TItem=TransferHead Property=ReceiverName Title="Куда" />
+      <RadzenDataGridColumn TItem=TransferHead Property=OperationDate Title="Дата" />
+      <RadzenDataGridColumn TItem=TransferHead>
+        <Template Context="item">
+          <RadzenButton Click="@(args => DeleteClick(item))" ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Small" Class="m-1" />
+        </Template>
+      </RadzenDataGridColumn>
+    </Columns>
+  </RadzenDataGrid>
+}
+
+@code {
+  private List<TransferHead>? transferHeads;
+  private List<Product>? products;
+  private List<Warehouse>? warehouses;
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      transferHeads = await TransferService.ListHeadsOnly();
+      products = await ProductService.List();
+      warehouses = await WarehouseService.List();
+      StateHasChanged();
+    }
+
+    await base.OnAfterRenderAsync(firstRender);
+  }
+
+  private async Task CreateClick()
+  {
+    var createDialogResult = await DialogService.OpenAsync<TransferCreateDialog>(
+      title: "Добавление перемещения",
+      parameters: new Dictionary<string, object> {
+        {"Products", products}, {"Warehouses", warehouses}
+      },
+      options: new DialogOptions() { Width = "700px", Height = "530px" }
+    );
+    if (createDialogResult is bool createSuccess && createSuccess)
+      await ReloadTransferHeads();
+  }
+
+  private async Task DeleteClick(TransferHead item)
+  {
+    var deleteDialogResult = await DialogService.OpenAsync<TransferDeleteDialog>(
+      title: "Удаление перемещения",
+      parameters: new Dictionary<string, object> {{"DeletingItem", item}},
+      options: new DialogOptions() { Width = "700px", Height = "530px" }
+    );
+    if (deleteDialogResult is bool deleteSuccess && deleteSuccess)
+      await ReloadTransferHeads();
+  }
+
+  private async Task ReloadTransferHeads()
+  {
+    transferHeads = await TransferService.ListHeadsOnly();
+    StateHasChanged();
+  }
+}
